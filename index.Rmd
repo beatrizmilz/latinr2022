@@ -1,0 +1,80 @@
+---
+type: oral
+language: english
+title: "Reproducible research with R and RMarkdown: lessons learned"
+authors:
+  - first_name: Beatriz
+    last_name: Milz
+    email: milz.bea@gmail.com   
+    country: br  
+    affiliation: "University of Sao Paulo"
+    url: "http://www.iee.usp.br/" 
+    corresponding: true
+keywords: 
+  - "Reproducible Research"
+  - "RMarkdown"
+  - "Quarto"
+abstract: |
+  Recently I published my first first-author paper [OMITTED FOR REVIEW], which was was my first attempt to do reproducible research. This resume describes which was the software and packages used and  some of the challenges faced. 
+bibliography: 
+  - latinr_bibliography.bib
+  - packages.bib
+biblio-style: apalike-es   
+output: 
+    latinr::latinr_article:
+      keep_tex: false
+      anonymise: true
+params: 
+  check_is_error: FALSE
+---
+
+
+```{r submission-checks, echo=FALSE, warning=TRUE}
+# Runs some basic checks in metadata. To disable, set check_is_error to FALSE
+latinr::latinr_checks(rmarkdown::metadata, params$check_is_error)
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+In May 2022, I published my first first-author paper [OMITTED FOR REVIEW]. This work was my first attempt to do reproducible research. This resume describes which was the software and packages used and some of the challenges faced. In addition, the complete code used in the paper is available in a public repository on GitHub: [OMITTED FOR REVIEW].
+
+## Software and packages used
+
+RMarkdown [@rmarkdown2018; @rmarkdown2020] is a format for writing reproducible reports with R: authors can add text, code, and results (such as calculations, tables, and figures) in this format. Then, authors can export the final report to PDF, Word, and HTML (web pages). RMarkdown is the format used in the study. The software used to develop the study was [R](https://cran.r-project.org/) [@rstats], [RStudio IDE](https://www.rstudio.com/products/rstudio/download/) [@rstudio], [Zotero](https://www.zotero.org/) (a reference manager), [Git](https://git-scm.com/) (for version control), and [GitHub](https://github.com/) (for online hosting of the code). 
+
+The packages used to structure the paper were: Rmarkdown [@R-rmarkdown], bookdown [@bookdown2016; @R-bookdown], flextable (to create tables) [@R-flextable], and ggplot2 with patchwork (to create and arrange graphs) [@R-ggplot2; @R-patchwork]. In addition, the paper lists the packages used to perform the data and statistical analysis. 
+
+
+## Challenges faced
+
+
+The journal the authors chose to submit the study only accepted submissions using word files (`.docx`). The first challenge was that only two authors were R programmers. Only the first author knew how to use RMarkdown, Git, and GitHub. The workflow of doing the analysis and writing the paper consisted in writing in RMarkdown and exporting a Word file to send to all the authors. After each iteration of contributions and reviews, the authors returned the Word files with their contributions, and the first author added the contributions to the RMarkdown file. The task of adding the contributions from Word to RMarkdown was time-consuming.
+
+Another challenge was generating tables in a suitable format when exported to Word. After testing several R packages and functions to generate tables, the chosen package was flextable. The package has extensive documentation published in a book format, which is an excellent asset for learning how to use it: <https://ardata-fr.github.io/flextable-book/>.
+
+## Organizing the code: R packages
+
+The first author of the paper chose to organize the code and files using the structure of an R package. A package structure creates a consistent way to organize the files. It is also interesting because all the dependencies (the R packages used) are stored in the DESCRIPTION file and can be easily installed on other computers using the function `devtools::install_deps()`.
+
+The organization of the code and files of the paper follows this pattern: The R functions are created and stored in the `R/` directory; the raw dataset and the code to clean the data are stored in the `data-raw/` directory; the clean data stored in the `data/` directory; all the dependencies stored in the `DESCRIPTION` file; and all the other content stored in the `inst/` directory: the directory for the analysis performed, the word template, the references files (`.bib`) both exported from Zotero and also created with R and the RMarkdown file of the article. The R package usethis [@R-usethis] is an important tool to create the structure of a package. The book [R packages](https://r-pkgs.org/) is a great source of content about how to create a package.
+
+
+## Conclusion
+
+The course of development and writing of this paper offered much learning. The first author learned much about writing a reproducible document and collaborating with RMarkdown. Since the other authors did not use RMarkdown, it is essential to have feedback about the reproducibility of the study. In addition, it can help to do research more reproducible in the future. In the future, it would be good to have a free feature on RStudio IDE or other software that allowed contributions to an RMarkdown or Quarto file from researchers who both are programmers and no programmers.  
+
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+knitr::write_bib(c("rmarkdown", "usethis", "flextable", "bookdown", "patchwork", "ggplot2"), "packages.bib")
+```
+
+
+
+
+
+## References
